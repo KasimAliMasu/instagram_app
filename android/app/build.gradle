@@ -3,6 +3,7 @@ plugins {
     id "kotlin-android"
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
+     id 'com.google.gms.google-services'
 }
 
 android {
@@ -11,9 +12,15 @@ android {
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+}
+
+ 
+lintOptions {
+    disable 'Deprecation'
+}
+
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
@@ -30,8 +37,11 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-         minSdkVersion 23   
+           minSdkVersion 23
+           targetSdkVersion 33
+           multiDexEnabled true
     }
+
 
     buildTypes {
         release {
@@ -40,7 +50,20 @@ android {
             signingConfig = signingConfigs.debug
         }
     }
+
+    buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.0.2'
+        classpath 'com.google.gms:google-services:4.3.15'
+    }
 }
+
+}
+
 
 flutter {
     source = "../.."
