@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'package:instagram_app/responsive/mobile_screen_layout.dart';
+import 'package:instagram_app/responsive/responsive_layout.dart';
+import 'package:instagram_app/responsive/web_screen_layout.dart';
 import 'package:instagram_app/screens/login_screen.dart';
-import 'package:instagram_app/screens/signup_screen.dart';
+
 import 'package:instagram_app/utils/colors.dart';
 
 void main() async {
@@ -31,15 +34,36 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'instagram_app',
-        theme: ThemeData.dark().copyWith(
-          scaffoldBackgroundColor: mobileBackgroundColor,
-        ),
-        // home: const ResponsiveLayout(
-        //   mobileScreenLayout: MobileScreenLayout(),
-        //   webScreenLayout: WebScreenLayout(),
-        // ),
-        home: SignupScreen());
+      debugShowCheckedModeBanner: false,
+      title: 'instagram_app',
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: mobileBackgroundColor,
+      ),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, Snapshot) {
+          if (Snapshot.connectionState == ConnectionState.active) {
+            if (Snapshot.hasData) {
+              return const ResponsiveLayout(
+                mobileScreenLayout: MobileScreenLayout(),
+                webScreenLayout: WebScreenLayout(),
+              );
+            } else if (Snapshot.hasError) {
+              return Center(
+                child: Text('${Snapshot.error}'),
+              );
+            }
+          }
+          if (Snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: primaryColor,
+              ),
+            );
+          }
+          return const LoginScreen();
+        },
+      ),
+    );
   }
 }

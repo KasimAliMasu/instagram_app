@@ -1,12 +1,15 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:instagram_app/resources/auth_methods.dart';
 
 import 'package:instagram_app/responsive/mobile_screen_layout.dart';
 import 'package:instagram_app/responsive/responsive_layout.dart';
 import 'package:instagram_app/responsive/web_screen_layout.dart';
 import 'package:instagram_app/screens/login_screen.dart';
 import 'package:instagram_app/utils/colors.dart';
+import 'package:instagram_app/utils/utils.dart';
 import 'package:instagram_app/widgets/text_field_input.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -67,7 +70,7 @@ class _SignupScreenState extends State<SignupScreen> {
       });
       // show the error
       if (context.mounted) {
-        showSnackBar(context, res);
+        showSnackBar(context as String, res as BuildContext);
       }
     }
   }
