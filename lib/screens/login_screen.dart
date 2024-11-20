@@ -4,7 +4,6 @@ import 'package:instagram_app/resources/auth_methods.dart';
 import 'package:instagram_app/responsive/mobile_screen_layout.dart';
 import 'package:instagram_app/responsive/responsive_layout.dart';
 import 'package:instagram_app/responsive/web_screen_layout.dart';
-
 import 'package:instagram_app/screens/signup_screen.dart';
 import 'package:instagram_app/utils/colors.dart';
 import 'package:instagram_app/utils/utils.dart';
